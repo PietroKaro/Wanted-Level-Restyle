@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+
+Edit wanted levels settings in this file. NOT all settings need to be changed.
+
+How to edit XML vehicle node:
+
+<DYourVehicle id="YourVehicleId" special_vehicle="for_example_plane" area="for_example_4"> MaxAmountInGame </DYourVehicle>
+
+- DYourVehicle: common vehicle name understandable by players;
+
+- id: do not edit! This is the model name. It identify a vehicle;
+
+- special_vehicle: do not edit! This identify the type of vehicle. I used this in my scripts to change spawn method.
+If this attribute is not present in vehicle node, the model will be a ground vehicle;
+
+- area: expertise area of this vehicle. Even if i set it up, you can change this number as you prefer.
+[0] = All San Andreas (vehicle nodes without this attribute mean this value) [1] = Los Santos [2] = Blaine County
+[3] = Around Mount Chiliad (used for Park Ranger) [4] = Coast Area (used for lifeguard vehicles)
+
+- MaxAmountInGame: edit this to set up the max number of spawnable units for this vehicle, min 1, max 10.
+IMPORTANT: The mod also counts "vanilla" police vehicles that are already in game. For example, if you want to edit
+the max number of Police Interceptors, remember that interceptors are normally spawned by Rockstar scripts so if you set
+this value with a low number like "2", my mod probably won't spawn Police Interceptor because that vehicle model will already
+be spawned in game with an amount of 2/3/4 vehicles. If you want more Police Interceptor, i recommend you to set a higher number
+like "7" (in game: three/four interceptors spawned by R* script + three/four interceptor spawned by mod).
+
+Vehicle node example:
+
+<TwoStars>
+<DNOOSERiot id="Riot">8</DNOOSERiot>
+</TwoStars>
+
+When you have two stars, will be spawned max eight police riot (64 noose agent!).
+
+<ThreeStars>
+<DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">3</DLifeguardFrogger>
+<ThreeStars>
+
+When you have three stars, only in coast areas (like Vespucci Beach or Paleto Bay), will be spawned max three Frogger.
+
+-->
+
+<WantedLevelRestyleDispatch>
+  <Settings>
+    <ToggleKey autostart="false">NumPad0</ToggleKey> <!-- Autostart make mod start automatically after game startup. -->
+    <MinTimeBetweenSpawn>3000</MinTimeBetweenSpawn> <!-- For each spawn, the mod will choose randomly a value between these values as interval between next spawn. -->
+    <MaxTimeBetweenSpawn>10000</MaxTimeBetweenSpawn> <!-- Min: 2000ms Max: 2000000000ms -->
+    <SpecialSpawns roadblocks="true" heli_mission="true" apc_cannon_in_water="true"/> <!-- Special spawns -->
+    
+    <!-- [Roadblocks] The mod will try to add other vehicles near R* roadblocks (only for 4, 5 and 6 stars). [HeliMission] The mod will try to spawn a special heli, only in wanted levels
+    where there are already spawned helicopters by this mod. This heli will land near player, otherwise, agent will rappel from this vehicle.
+    [APCCannonInWater] The mod will try to spawn a special APC in water with armed passenger with cannon. -->
+  </Settings>
+
+  <OneStar>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">0</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">2</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">0</DSheriffSUV>
+      <DNOOSERiot id="Riot">0</DNOOSERiot>
+      <DRCV id="Riot2">0</DRCV>
+      <DFIBBuffalo id="FBI">0</DFIBBuffalo>
+      <DFIBSUV id="FBI2">0</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">0</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">0</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">0</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">0</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">0</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </OneStar>
+
+  <TwoStars>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">3</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">2</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">2</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">0</DSheriffSUV>
+      <DNOOSERiot id="Riot">0</DNOOSERiot>
+      <DRCV id="Riot2">0</DRCV>
+      <DFIBBuffalo id="FBI">0</DFIBBuffalo>
+      <DFIBSUV id="FBI2">0</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">0</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">0</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">0</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">0</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">0</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </TwoStars>
+
+  <ThreeStars>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">3</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">4</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">3</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">3</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">0</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">3</DSheriffSUV>
+      <DNOOSERiot id="Riot">0</DNOOSERiot>
+      <DRCV id="Riot2">0</DRCV>
+      <DFIBBuffalo id="FBI">0</DFIBBuffalo>
+      <DFIBSUV id="FBI2">0</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">0</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">0</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">0</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">0</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">0</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </ThreeStars>
+
+  <FourStars>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">3</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">4</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">1</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">2</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">3</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">0</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">0</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">3</DSheriffSUV>
+      <DNOOSERiot id="Riot">3</DNOOSERiot>
+      <DRCV id="Riot2">1</DRCV>
+      <DFIBBuffalo id="FBI">0</DFIBBuffalo>
+      <DFIBSUV id="FBI2">0</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">0</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">0</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">3</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">0</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">0</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </FourStars>
+
+  <FiveStars>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">1</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">0</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">0</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">0</DSheriffSUV>
+      <DNOOSERiot id="Riot">3</DNOOSERiot>
+      <DRCV id="Riot2">2</DRCV>
+      <DFIBBuffalo id="FBI">3</DFIBBuffalo>
+      <DFIBSUV id="FBI2">3</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">4</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">1</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">2</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">2</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">2</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </FiveStars>
+
+  <SixStars>
+    <Vehicle>
+      <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">0</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">0</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">0</DSheriffSUV>
+      <DNOOSERiot id="Riot">0</DNOOSERiot>
+      <DRCV id="Riot2">3</DRCV>
+      <DFIBBuffalo id="FBI">3</DFIBBuffalo>
+      <DFIBSUV id="FBI2">3</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">4</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">3</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">2</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">2</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">3</DKurtz31>
+      <DBarracks id="Barracks">2</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">4</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">1</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">2</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">2</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">2</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">1</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">1</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+    </Vehicle>
+  </SixStars>
+</WantedLevelRestyleDispatch>
+
+<!-- 
+      "Empty" list of spawned vehicles, if you need:
+      
+      <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
+      <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
+      <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
+      <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>
+      <DPoliceBike id="Policeb">0</DPoliceBike>
+      <DParkRanger id="Pranger" area="3">0</DParkRanger>
+      <DPoliceCruiser id="Police" area="1">0</DPoliceCruiser>
+      <DPoliceInterceptor id="Police3" area="1">0</DPoliceInterceptor>
+      <DSheriffCruiser id="Sheriff" area="2">0</DSheriffCruiser>
+      <DSheriffSUV id="Sheriff2">0</DSheriffSUV>
+      <DNOOSERiot id="Riot">0</DNOOSERiot>
+      <DRCV id="Riot2">0</DRCV>
+      <DFIBBuffalo id="FBI">0</DFIBBuffalo>
+      <DFIBSUV id="FBI2">0</DFIBSUV>
+      <DUnmarkedPoliceCruiser id="Police4">0</DUnmarkedPoliceCruiser>
+      <DAPC id="Apc">0</DAPC>
+      <DPredator id="Predator" special_vehicle="boat">0</DPredator>
+      <DDinghy id="Dinghy3" special_vehicle="boat">0</DDinghy>
+      <DWeaponizedDinghy id="Dinghy5" special_vehicle="boat">0</DWeaponizedDinghy>
+      <DKurtz31 id="PatrolBoat" special_vehicle="boat">0</DKurtz31>
+      <DBarracks id="Barracks">0</DBarracks>
+      <DBarrage id="Barrage">0</DBarrage>
+      <DCrusader id="Crusader">0</DCrusader>
+      <DHalfTrack id="HalfTrack">0</DHalfTrack>
+      <DRhino id="Rhino">0</DRhino>
+      <DKhanjali id="Khanjari">0</DKhanjali>
+      <DInsurgent id="Insurgent3">0</DInsurgent>
+      <DAnnihilator id="Annihilator" special_vehicle="heli">0</DAnnihilator>
+      <DStealthAnnihilator id="Annihilator2" special_vehicle="heli">0</DStealthAnnihilator>
+      <DBuzzard id="Buzzard" special_vehicle="heli">0</DBuzzard>
+      <DAkula id="Akula" special_vehicle="heli">0</DAkula>
+      <DHunter id="Hunter" special_vehicle="heli">0</DHunter>
+      <DSavage id="Savage" special_vehicle="heli">0</DSavage>
+      <DStrikeforce id="Strikeforce" special_vehicle="plane">0</DStrikeforce>
+      <DHydra id="Hydra" special_vehicle="plane">0</DHydra>
+      <DLazer id="Lazer" special_vehicle="plane">0</DLazer>
+-->
