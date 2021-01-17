@@ -38,7 +38,7 @@ namespace Wanted_Level_Restyle_2
                 {
                     _Spawner.KeysWantedLevelList.Add(levelCounter, WlrMod.GetDispatchVehicleList(_Path, levelCounter)); // Create dictionary to contains wanted levels vehicles.
                 }
-                DispatchVehicle.CommonVehicles.AddRange(new DispatchVehicle[] { new DispatchVehicle(VehicleHash.Annihilator, 500), new DispatchVehicle(VehicleHash.Annihilator2, 500), new DispatchVehicle(VehicleHash.Maverick, 500), new DispatchVehicle(VehicleHash.Insurgent2, 300), new DispatchVehicle(VehicleHash.Riot2, 300), new DispatchVehicle(VehicleHash.Apc, 300) }); // Per gestire anche i veicoli speciali che potrebbero essere non presenti nella lista scelta dal giocatore.
+                DispatchVehicle.CommonVehicles.AddRange(new DispatchVehicle[] { new DispatchVehicle(VehicleHash.Annihilator, 500), new DispatchVehicle(VehicleHash.Annihilator2, 500), new DispatchVehicle(VehicleHash.Maverick, 500), new DispatchVehicle(VehicleHash.Insurgent2, 300), new DispatchVehicle(VehicleHash.Riot2, 300), new DispatchVehicle(VehicleHash.Apc, 300) });
                 DispatchVehicle.CommonVehicles = DispatchVehicle.CommonVehicles.Distinct(new DispatchVehicle.DispatchVehicleSelector()).ToList();
                 _Generator = new Random();
                 if (_AutoStart)
