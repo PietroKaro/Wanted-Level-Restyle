@@ -44,14 +44,16 @@ When you have three stars, only in coast areas (like Vespucci Beach or Paleto Ba
 
 <WantedLevelRestyleDispatch>
   <Settings>
-    <ToggleKey autostart="false">NumPad0</ToggleKey> <!-- Autostart make mod start automatically after game startup. -->
+    <ToggleKey autostart="true">NumPad0</ToggleKey> <!-- Autostart make mod start automatically after game startup. -->
     <MinTimeBetweenSpawn>3000</MinTimeBetweenSpawn> <!-- For each spawn, the mod will choose randomly a value between these values as interval between next spawn. -->
     <MaxTimeBetweenSpawn>10000</MaxTimeBetweenSpawn> <!-- Min: 2000ms Max: 2000000000ms -->
-    <SpecialSpawns roadblocks="true" heli_mission="true" apc_cannon_in_water="true"/> <!-- Special spawns -->
+    <SpecialSpawns roadblocks="false" heli_mission="false" apc_cannon_in_water="false"/> <!-- Special spawns -->
     
     <!-- [Roadblocks] The mod will try to add other vehicles near R* roadblocks (only for 4, 5 and 6 stars). [HeliMission] The mod will try to spawn a special heli, only in wanted levels
     where there are already spawned helicopters by this mod. This heli will land near player, otherwise, agent will rappel from this vehicle.
     [APCCannonInWater] The mod will try to spawn a special APC in water with armed passenger with cannon. -->
+  
+    <!-- IF YOU WANT SIX STARS IMMEDIATELY: WRITE "BRINGITON" IN GAME CONSOLE WHILE THE MOD IS TOGGLED ON. -->
   </Settings>
 
   <OneStar>
@@ -144,7 +146,7 @@ When you have three stars, only in coast areas (like Vespucci Beach or Paleto Ba
     <Vehicle>
       <DLifeguardSUV id="Lguard" area="4">3</DLifeguardSUV>
       <DLifeguardSeashark id="Seashark2" special_vehicle="boat">4</DLifeguardSeashark>
-      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">1</DLifeguardFrogger>
       <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
       <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
       <DPoliceBuffalo id="Police2" area="1">3</DPoliceBuffalo>
@@ -187,7 +189,7 @@ When you have three stars, only in coast areas (like Vespucci Beach or Paleto Ba
     <Vehicle>
       <DLifeguardSUV id="Lguard" area="4">3</DLifeguardSUV>
       <DLifeguardSeashark id="Seashark2" special_vehicle="boat">4</DLifeguardSeashark>
-      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">1</DLifeguardFrogger>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
       <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
       <DPoliceVan id="PoliceT" area="1">2</DPoliceVan>
       <DPoliceBuffalo id="Police2" area="1">3</DPoliceBuffalo>
@@ -230,7 +232,7 @@ When you have three stars, only in coast areas (like Vespucci Beach or Paleto Ba
     <Vehicle>
       <DLifeguardSUV id="Lguard" area="4">0</DLifeguardSUV>
       <DLifeguardSeashark id="Seashark2" special_vehicle="boat">0</DLifeguardSeashark>
-      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">1</DLifeguardFrogger>
+      <DLifeguardFrogger id="Frogger" special_vehicle="heli" area="4">0</DLifeguardFrogger>
       <DPoliceMaverick id="Polmav" special_vehicle="heli">0</DPoliceMaverick>
       <DPoliceVan id="PoliceT" area="1">0</DPoliceVan>
       <DPoliceBuffalo id="Police2" area="1">0</DPoliceBuffalo>

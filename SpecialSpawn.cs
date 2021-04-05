@@ -17,14 +17,15 @@ namespace Wanted_Level_Restyle_2
         byte _Checkpoint;
         readonly Vehicle _Heli;
         readonly List<Ped> _PedsInTask; 
-        Vector3 _PlayerPosition;
+        Vector3 _LandingPosition;
         DateTime _MaxTimeTask;
 
-        SpecialSpawn(Vehicle vehicle, List<Ped> pedsInTask, Vector3 playerPosition)
+        SpecialSpawn(Vehicle vehicle, List<Ped> pedsInTask, Vector3 landingPosition, byte checkpoint)
         {
             _Heli = vehicle;
             _PedsInTask = pedsInTask;
-            _PlayerPosition = playerPosition;
+            _LandingPosition = landingPosition;
+            _Checkpoint = checkpoint;
         }
 
         public static bool TrySpawnWaterApc(int type) // WaterAPC with cannon.
@@ -124,10 +125,14 @@ namespace Wanted_Level_Restyle_2
                 foreach (Vehicle vehicleRef in reference)
                 {
                     Vehicle heli = null;
-                    if (vehicleRef.Exists() && vehicleRef.IsPersistent && vehicleRef.Model.IsHelicopter && vehicleRef.IsInAir && vehicleRef.IsDriveable && !vehicleRef.IsOnScreen)
+                    if (vehicleRef.Exists() && /*vehicleRef.IsPersistent &&*/ vehicleRef.Model.IsHelicopter /*&& vehicleRef.IsInAir && vehicleRef.IsDriveable && !vehicleRef.IsOnScreen*/) // debug
                     {
                         try
                         {
+                            if (!GetLandingPoint(out Vector3 missionLandingPosition, out byte startCheckpoint))
+                            {
+                                break;
+                            }
                             heli = World.CreateVehicle(heliModel, vehicleRef.Position + vehicleRef.ForwardVector * -new Random().Next(10, 31), vehicleRef.Heading);
                             if (heliModel == VehicleHash.Maverick)
                             {
@@ -154,7 +159,7 @@ namespace Wanted_Level_Restyle_2
                             }
                             heli.IsEngineRunning = true;
                             heli.HeliBladesSpeed = 1.0f;
-                            heliResult = new SpecialSpawn(heli, peds, Game.Player.Character.Position);
+                            heliResult = new SpecialSpawn(heli, peds, missionLandingPosition, startCheckpoint);
                             MissionRunning = true;
                             heliResult.CheckHeliMission();
                             return true;
@@ -169,13 +174,47 @@ namespace Wanted_Level_Restyle_2
                                 }
                                 heli.Delete();
                             }
-                            heliResult = null;
-                            return false;
+                            break;
                         }
                     }
                 }
             }
             heliResult = null;
+            return false;
+        }
+
+        public static bool GetLandingPoint(out Vector3 landingPosition, out byte checkpointStart)
+        {
+            OutputArgument outPosition = new OutputArgument();
+            float hRange = 30.0f;
+            checkpointStart = 0;
+            while (true)
+            {
+                for (float pRange = 10.0f; pRange < 100; pRange += 10)
+                {
+                    Vector3 playerPositionAround = Game.Player.Character.Position.Around(pRange);
+                    if (Function.Call<bool>(Hash.GET_CLOSEST_VEHICLE_NODE, playerPositionAround.X, playerPositionAround.Y, playerPositionAround.Z, outPosition, 1, 3.0f, 0))
+                    {
+                        landingPosition = outPosition.GetResult<Vector3>();
+                        if (!Function.Call<bool>(Hash.IS_POSITION_OCCUPIED, landingPosition.X, landingPosition.Y, landingPosition.Z, hRange, false, true, true, true, true, 0, true) && !Function.Call<bool>(Hash.IS_POINT_OBSCURED_BY_A_MISSION_ENTITY, landingPosition.X, landingPosition.Y, landingPosition.Z, hRange, hRange, hRange, 0))
+                        {
+                            WlrException.ShowMessage("Trovata posizione", false); // debug
+                            World.CreateBlip(landingPosition); // debug
+                            return true;
+                        }
+                    }
+                }
+                if (checkpointStart == 0)
+                {
+                    checkpointStart = 3;
+                    hRange = 5.0f;
+                    WlrException.ShowMessage("Rappel", false); // debug
+                    continue;
+                }
+                break;
+            }
+            landingPosition = Vector3.Zero;
+            WlrException.ShowMessage("Posizione non trovata", false); // debug
             return false;
         }
 
@@ -187,15 +226,13 @@ namespace Wanted_Level_Restyle_2
                 {
                     case 0:
                         _MaxTimeTask = DateTime.UtcNow.AddMinutes(1d);
-                        Function.Call(Hash.TASK_HELI_MISSION, _PedsInTask[PED_DRIVER], _Heli, 0, 0, _PlayerPosition.X, _PlayerPosition.Y, _PlayerPosition.Z, 4, 30.0f, 50.0f, (_PlayerPosition - _Heli.Position).ToHeading(), -1, -1, -1, 32);
+                        Function.Call(Hash.TASK_HELI_MISSION, _PedsInTask[PED_DRIVER], _Heli, 0, 0, _LandingPosition.X, _LandingPosition.Y, _LandingPosition.Z, 4, 20.0f, 10.0f, (_LandingPosition - _Heli.Position).ToHeading(), -1, -1, -1, 32);
                         _Checkpoint++;
                         break;
                     case 1:
                         if ((DateTime.UtcNow >= _MaxTimeTask && !_Heli.IsOnAllWheels) || _Heli.EngineHealth <= 925.0f)
                         {
                             _PedsInTask[PED_DRIVER].Task.ClearAll();
-                            Function.Call(Hash.TASK_HELI_MISSION, _PedsInTask[PED_DRIVER], _Heli, 0, 0, _PlayerPosition.X, _PlayerPosition.Y, _PlayerPosition.Z + 15.0f, 4, 20.0f, 10.0f, (_PlayerPosition - _Heli.Position).ToHeading(), -1, -1, -1, 0);
-                            _MaxTimeTask = DateTime.UtcNow.AddMinutes(2d);
                             _Checkpoint = 3;
                         }
                         else if (_Heli.IsInWater)
@@ -219,11 +256,16 @@ namespace Wanted_Level_Restyle_2
                         }
                         break;
                     case 3:
+                        Function.Call(Hash.TASK_HELI_MISSION, _PedsInTask[PED_DRIVER], _Heli, 0, 0, _LandingPosition.X, _LandingPosition.Y, _LandingPosition.Z + 15.0f, 4, 20.0f, 10.0f, (_LandingPosition - _Heli.Position).ToHeading(), -1, -1, -1, 0);
+                        _MaxTimeTask = DateTime.UtcNow.AddMinutes(1d);
+                        _Checkpoint++;
+                        break;
+                    case 4:
                         if (DateTime.UtcNow >= _MaxTimeTask)
                         {
                             TerminateHeliMission();
                         }
-                        else if (_PlayerPosition.DistanceTo2D(_Heli.Position) <= 10.0f)
+                        else if (_LandingPosition.DistanceTo2D(_Heli.Position) <= 10.0f)
                         {
                             _PedsInTask[PED_DRIVER]?.Task.ClearAll();
                             _Heli.MaxSpeed = 10.0f;
@@ -232,13 +274,13 @@ namespace Wanted_Level_Restyle_2
                             _Checkpoint++;
                         }
                         break;
-                    case 4:
+                    case 5:
                         if (Function.Call<bool>(Hash._IS_ANY_PASSENGER_RAPPELING_FROM_VEHICLE, _Heli))
                         {
                             _Checkpoint++;
                         }
                         break;
-                    case 5:
+                    case 6:
                         if (!Function.Call<bool>(Hash._IS_ANY_PASSENGER_RAPPELING_FROM_VEHICLE, _Heli))
                         {
                             _PedsInTask[PED_LEFT]?.Task.FightAgainst(Game.Player.Character);
@@ -277,7 +319,7 @@ namespace Wanted_Level_Restyle_2
 
         private bool CheckEntities() // If false, HeliMission needs to be aborted immediately.
         {
-            return _Heli.Exists() && _PedsInTask[PED_DRIVER].Exists() && _PedsInTask[PED_DRIVER].IsAlive && _PedsInTask[PED_DRIVER].IsInVehicle(_Heli) && _Heli.IsDriveable && ((_PedsInTask[PED_LEFT].Exists() && _PedsInTask[PED_LEFT].IsAlive) || (_PedsInTask[PED_RIGHT].Exists() && _PedsInTask[PED_RIGHT].IsAlive)) && Game.Player.Character.IsInRange(_PlayerPosition, 150.0f);
+            return _Heli.Exists() && _PedsInTask[PED_DRIVER].Exists() && _PedsInTask[PED_DRIVER].IsAlive && _PedsInTask[PED_DRIVER].IsInVehicle(_Heli) && _Heli.IsDriveable && ((_PedsInTask[PED_LEFT].Exists() && _PedsInTask[PED_LEFT].IsAlive) || (_PedsInTask[PED_RIGHT].Exists() && _PedsInTask[PED_RIGHT].IsAlive)) && Game.Player.Character.IsInRange(_LandingPosition, 150.0f);
         }
     }
 }

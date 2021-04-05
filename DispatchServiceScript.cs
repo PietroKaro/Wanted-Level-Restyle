@@ -89,7 +89,7 @@ namespace Wanted_Level_Restyle_2
             }
         }
 
-        void SetNpcsInUnit(Vehicle vehicle, Model npcModel, WeaponHash[] weaponsForUnit, string womenMenNpcs, bool setAsCops, bool armyRelationship, bool taskCombatPlayer, VehicleWeaponHash vehicleWeapon, params int[] seats) // To spwan peds in spawned vehicle.
+        void SetNpcsInUnit(Vehicle vehicle, Model npcModel, WeaponHash[] weaponsForUnit, string womenMenNpcs, bool setAsCops, bool armyRelationship, bool taskCombatPlayer, VehicleWeaponHash vehicleWeapon, params int[] seats) // To spawn peds in spawned vehicle.
         {
             try
             {
@@ -160,7 +160,7 @@ namespace Wanted_Level_Restyle_2
                         break;
                     case VehicleHash.Frogger:
                         SetUnitColor(spawnedVehicle, VehicleColor.MetallicYellowBird, VehicleColor.MetallicBlazeRed, VehicleColor.MetallicWhite);
-                        SetNpcsInUnit(spawnedVehicle, PedHash.Uscg01SMY, new WeaponHash[] { WeaponHash.HeavySniper }, null, false, false, true, VehicleWeaponHash.Invalid, -1, 0, 1, 2);
+                        SetNpcsInUnit(spawnedVehicle, PedHash.Uscg01SMY, new WeaponHash[] { WeaponHash.MG }, null, false, false, true, VehicleWeaponHash.Invalid, -1, 0, 1, 2);
                         break;
                     case VehicleHash.Apc:
                         SetUnitColor(spawnedVehicle, VehicleColor.UtilDarkBlue, VehicleColor.UtilDarkBlue, VehicleColor.MatteBlack);
