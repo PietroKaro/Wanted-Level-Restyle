@@ -12,6 +12,8 @@ namespace Wanted_Level_Restyle_2
     {
         static readonly int ListCapacity = Enum.GetNames(typeof(AvaiableDispatchVehicle)).Length; // Max list capacity for each wanted level list.
 
+        public static readonly Random Generator = new Random();
+
         public static (Keys toggleKey, bool autoStart, bool roadBlocks, bool heliMission, bool waterApc) ReadSettings(string xmlPath) // Read mod settings from XML.
         {
             Keys toggleKey = Keys.NumPad0;
@@ -246,6 +248,98 @@ namespace Wanted_Level_Restyle_2
                 }
             }
             return false;
+        }
+
+        public static void SetUnitColor(Vehicle vehicle, VehicleColor primary, VehicleColor secondary, VehicleColor pearlescent)
+        {
+            vehicle.Mods.PrimaryColor = primary;
+            vehicle.Mods.SecondaryColor = secondary;
+            vehicle.Mods.PearlescentColor = pearlescent;
+        }
+
+        public static void SetNpcsInUnit(Vehicle vehicle, Model npcModel, WeaponHash[] weaponsForUnit, string womenMenNpcs, bool setAsCops, bool armyRelationship, bool taskCombatPlayer, VehicleWeaponHash vehicleWeapon, params int[] seats) // To spawn peds in spawned vehicle.
+        {
+            try
+            {
+                foreach (int seat in seats)
+                {
+                    PedHash pedModel;
+                    if (womenMenNpcs != null)
+                    {
+                        pedModel = CasualGender(womenMenNpcs);
+                    }
+                    else
+                    {
+                        pedModel = npcModel;
+                    }
+                    Ped spawnedNpc = vehicle.CreatePedOnSeat((VehicleSeat)seat, pedModel);
+                    SetRandomPedBehaviours(spawnedNpc, vehicle);
+                    foreach (WeaponHash weapon in weaponsForUnit)
+                    {
+                        spawnedNpc.Weapons.Give(weapon, 9999, false, true).InfiniteAmmo = true;
+                    }
+                    if (setAsCops)
+                    {
+                        Function.Call(Hash.SET_PED_AS_COP, spawnedNpc, true);
+                    }
+                    if (armyRelationship)
+                    {
+                        Function.Call(Hash.SET_PED_RELATIONSHIP_GROUP_HASH, spawnedNpc, Function.Call<int>(Hash.GET_HASH_KEY, "ARMY"));
+                    }
+                    if (vehicleWeapon != VehicleWeaponHash.Invalid)
+                    {
+                        spawnedNpc.VehicleWeapon = vehicleWeapon;
+                    }
+                    if (taskCombatPlayer)
+                    {
+                        spawnedNpc.AlwaysKeepTask = true;
+                        spawnedNpc.BlockPermanentEvents = true;
+                        spawnedNpc.Task.FightAgainst(Game.Player.Character);
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+                foreach (Ped occupant in vehicle.Occupants) // Delete vehicle and its occupants in case of exception.
+                {
+                    occupant.Delete();
+                }
+                vehicle.Delete();
+                throw new WlrException(null, false);
+            }
+        }
+
+        static PedHash CasualGender(string pedHash) // It chooses a casual gender for ped (ex: used for peds in Sheriff SUV).
+        {
+            int result = Generator.Next(2);
+            PedHash pedResult;
+            if (result == 0)
+            {
+                Enum.TryParse(pedHash + "SMY", out pedResult);
+                return pedResult;
+            }
+            else
+            {
+                Enum.TryParse(pedHash + "SFY", out pedResult);
+                return pedResult;
+            }
+        }
+
+        static void SetRandomPedBehaviours(Ped npc, Vehicle vehicleModel) // Set some ped behaviours...
+        {
+            float view, angle;
+            if (vehicleModel.Model.IsHelicopter || vehicleModel.Model.IsPlane)
+            {
+                view = Generator.Next(100, 301);
+            }
+            else
+            {
+                view = Generator.Next(50, 101);
+            }
+            angle = Generator.Next(20, 91);
+            Function.Call(Hash.SET_PED_VISUAL_FIELD_CENTER_ANGLE, npc, angle);
+            Function.Call(Hash.SET_PED_SEEING_RANGE, npc, view);
+            Function.Call(Hash.SET_PED_HEARING_RANGE, npc, 200.0f);
         }
     }
 }

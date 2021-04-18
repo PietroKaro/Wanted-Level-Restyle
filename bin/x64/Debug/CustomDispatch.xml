@@ -47,7 +47,7 @@ When you have three stars, only in coast areas (like Vespucci Beach or Paleto Ba
     <ToggleKey autostart="true">NumPad0</ToggleKey> <!-- Autostart make mod start automatically after game startup. -->
     <MinTimeBetweenSpawn>3000</MinTimeBetweenSpawn> <!-- For each spawn, the mod will choose randomly a value between these values as interval between next spawn. -->
     <MaxTimeBetweenSpawn>10000</MaxTimeBetweenSpawn> <!-- Min: 2000ms Max: 2000000000ms -->
-    <SpecialSpawns roadblocks="false" heli_mission="false" apc_cannon_in_water="false"/> <!-- Special spawns -->
+    <SpecialSpawns roadblocks="false" heli_mission="false" apc_cannon_in_water="true"/> <!-- Special spawns -->
     
     <!-- [Roadblocks] The mod will try to add other vehicles near R* roadblocks (only for 4, 5 and 6 stars). [HeliMission] The mod will try to spawn a special heli, only in wanted levels
     where there are already spawned helicopters by this mod. This heli will land near player, otherwise, agent will rappel from this vehicle.

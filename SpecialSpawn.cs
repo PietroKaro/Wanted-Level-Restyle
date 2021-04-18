@@ -38,9 +38,7 @@ namespace Wanted_Level_Restyle_2
                 {
                     try
                     {
-                        Apc.Mods.PrimaryColor = VehicleColor.MatteDesertTan;
-                        Apc.Mods.SecondaryColor = VehicleColor.MatteDesertTan;
-                        Apc.Mods.PearlescentColor = VehicleColor.MetallicDarkSilver;
+                        WlrMod.SetUnitColor(Apc, VehicleColor.MatteDesertTan, VehicleColor.MatteDesertTan, VehicleColor.MetallicDarkSilver);
                         Apc.IsEngineRunning = true;
                         foreach (int seat in new int[] { -1, 0 })
                         {
@@ -50,7 +48,7 @@ namespace Wanted_Level_Restyle_2
                         }
                         return true;
                     }
-                    catch (NullReferenceException)
+                    catch (Exception ex) when (ex is NullReferenceException || ex is WlrException) 
                     {
                         foreach (Ped occupant in Apc.Occupants)
                         {

@@ -22,7 +22,6 @@ namespace Wanted_Level_Restyle_2
         byte _DeadNpcs;
         int _MaxDeadNpcs;
         readonly DispatchServiceScript _Spawner;
-        readonly Random _Generator;
         DateTime _NextTime, _HeliTime, _RoadblockTime, _ApcTime;
         SpecialSpawn _SpecialSpawn;
 
@@ -43,7 +42,6 @@ namespace Wanted_Level_Restyle_2
                 }
                 DispatchVehicle.CommonVehicles.AddRange(new DispatchVehicle[] { new DispatchVehicle(VehicleHash.Annihilator, 500), new DispatchVehicle(VehicleHash.Annihilator2, 500), new DispatchVehicle(VehicleHash.Maverick, 500), new DispatchVehicle(VehicleHash.Insurgent2, 300), new DispatchVehicle(VehicleHash.Riot2, 300), new DispatchVehicle(VehicleHash.Apc, 300) });
                 DispatchVehicle.CommonVehicles = DispatchVehicle.CommonVehicles.Distinct(new DispatchVehicle.DispatchVehicleSelector()).ToList();
-                _Generator = new Random();
                 _Spawner.Aborted += OnSpawnerAborted;
             }
             catch (WlrException)
@@ -239,7 +237,7 @@ namespace Wanted_Level_Restyle_2
         void StartMod()
         {
             ToggleBlockDispatch(NOOSE_RIDERS, true);
-            _MaxDeadNpcs = _Generator.Next(40, 61);
+            _MaxDeadNpcs = WlrMod.Generator.Next(40, 61);
             int fakeValue = 6; // This prevents six stars cheat from being active when player toggle on the mod after entering "bringiton" in game console.
             WasSixStarsCheatJustEntered(ref fakeValue);
             Notification.Show("New wanted level: ~g~ON~w~.");
@@ -260,9 +258,9 @@ namespace Wanted_Level_Restyle_2
                 if (!_IsActive) // Set various datetimes.
                 {
                     _IsActive = true;
-                    _NextTime = DateTime.UtcNow.AddMinutes(_Generator.Next(2, 11));
-                    _HeliTime = DateTime.UtcNow.AddMinutes(_Generator.Next(1, 3));
-                    _ApcTime = DateTime.UtcNow.AddMinutes(_Generator.Next(1, 3));
+                    _NextTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(2, 11));
+                    _HeliTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(1, 3));
+                    _ApcTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(1, 3));
                     _RoadblockTime = DateTime.UtcNow.AddMinutes(0.25d);
                 }
                 return true;
@@ -398,7 +396,7 @@ namespace Wanted_Level_Restyle_2
             if (DateTime.UtcNow >= _NextTime)
             {
                 cleanEmptyVehicles = true;
-                _NextTime = DateTime.UtcNow.AddMinutes(_Generator.Next(2, 11));
+                _NextTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(2, 11));
             }
             foreach (DispatchVehicle dispatchVehicle in vehicleModels)
             {
@@ -463,7 +461,7 @@ namespace Wanted_Level_Restyle_2
                     {
                         _SpecialSpawn = specialSpawn;
                     }
-                    _HeliTime = DateTime.UtcNow.AddMinutes(_Generator.Next(1, 3));
+                    _HeliTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(1, 3));
                 }
                 else if (currentTime >= _RoadblockTime && _RoadBlocks)
                 {
@@ -473,7 +471,7 @@ namespace Wanted_Level_Restyle_2
                 else if (currentTime >= _ApcTime && _WaterAPC)
                 {
                     SpecialSpawn.TrySpawnWaterApc(gameWantedLevel);
-                    _ApcTime = DateTime.UtcNow.AddMinutes(_Generator.Next(1, 3));
+                    _ApcTime = DateTime.UtcNow.AddMinutes(WlrMod.Generator.Next(1, 3));
                 }
             }
         }
