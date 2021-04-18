@@ -13,7 +13,7 @@ namespace Wanted_Level_Restyle_2
             ShowMessage(Message, fatal);
         }
 
-        public static void ShowMessage(string message, bool fatal)
+        public static void ShowMessage(string message, bool fatal) //
         {
             if (fatal)
             {
