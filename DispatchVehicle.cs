@@ -300,7 +300,7 @@ namespace Wanted_Level_Restyle_2
                 return false;
             }
 
-            public int GetHashCode(DispatchVehicle dispatchVehicle)
+            public int GetHashCode(DispatchVehicle dispatchVehicle)//
             {
                 return dispatchVehicle.Hash.GetHashCode();
             }
